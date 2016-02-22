@@ -9,11 +9,18 @@ class StudentScraper
   def students
 
     index_doc = Nokogiri::HTML(open(@url))
-    student_links = index_doc.css("div.card-text-container h4.student-name")
-    
-    student_links.collect {|s| Student.new(s.text)}
+    student_links = index_doc.css("div.student-card")
+
+    student_links.collect do |student| 
+      s = Student.new(student.css("h4.student-name").text)
+      s.href = "#{@url}#{student.css("a").attr("href").value}"
+      s.location = student.css("p.student-location").text
+      s
+    end
+
   end
 
 
 end
+
 

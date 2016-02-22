@@ -11,7 +11,7 @@ class StudentCLI
     
     command = nil
     while command != "exit"
-
+      puts "--------------------------"
       puts "What would you like to do?"
       command = gets.strip
       
@@ -30,10 +30,19 @@ class StudentCLI
   end
 
   def show(name)
-    student = @students.find {|student| student.name == name}
-    puts "#{student.name}"
+    namec = name.split.map(&:capitalize)*' '
+    student = @students.find {|student| student.name == namec}
+
+    if student.nil?
+      puts "*****************************"
+      puts "STUDENT NOT FOUND IN DATABASE"
+      puts "*****************************"
+    else
+      puts "--------------------------"
+      puts "Name: #{student.name}"
+      puts "Location: #{student.location}"
+      puts "Website: #{student.href}"
+    end
   end
-
-
 
 end
